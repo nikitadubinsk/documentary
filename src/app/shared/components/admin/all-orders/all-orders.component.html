@@ -1,0 +1,39 @@
+<div class="block main">
+  <tui-island hoverable="true" class="tui-space_top-6">
+    <p class="tui-island__category">Заказы</p>
+    <h3 class="tui-island__title">Список всех заказов</h3>
+    <tui-input class="tui-group__inherit-item" class="tui-space_bottom-2" icon="tuiIconSearch" [(ngModel)]="search">
+      Поиск по заказам
+    </tui-input>
+    <table>
+      <tr>
+        <th>Номер</th>
+        <th>Данные отправителя</th>
+        <th>Данные получателя</th>
+        <th>Статус</th>
+        <th>Данные курьера</th>
+      </tr>
+      <td colspan="5" *ngIf="loading">
+        <tui-loader [showLoader]="loading" size="xxl"></tui-loader>
+      </td>
+      <tr *ngFor="let order of orders | search:search">
+        <td>{{order.id}}</td>
+        <td>{{order.senderName}}, {{order.senderTelephone}}, {{order.senderAddress}}</td>
+        <td>{{order.recipientName}}, {{order.recipientTelephone}}, {{order.recipientAddress}}</td>
+        <td *ngIf="order.status === 1">Заказ создан</td>
+        <td *ngIf="order.status === 2">Назначен курьер</td>
+        <td *ngIf="order.status === 3">Уже в пути</td>
+        <td *ngIf="order.status === 4">Подтверждение</td>
+        <td *ngIf="order.status === 5">Получен</td>
+        <td>{{order.courier.name}}, {{order.courier.telephone}}</td>
+      </tr>
+    </table>
+    <div class="pagination">
+      <p>Страница: {{currentPage}}</p>
+      <div>
+        <p *ngFor="let page of sumPage" [ngClass]="{'active': page === currentPage}" (click)="newPage(page)">{{page}}
+        </p>
+      </div>
+    </div>
+  </tui-island>
+</div>

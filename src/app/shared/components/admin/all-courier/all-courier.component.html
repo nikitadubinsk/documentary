@@ -1,0 +1,32 @@
+<div class="block main">
+  <tui-island hoverable="true" class="tui-space_top-6">
+    <p class="tui-island__category">Курьеры</p>
+    <h3 class="tui-island__title">Список всех курьеров</h3>
+    <tui-input class="tui-group__inherit-item" class="tui-space_bottom-2" icon="tuiIconSearch" [(ngModel)]="search">
+      Поиск по заказам
+    </tui-input>
+    <table>
+      <tr>
+        <th>Номер</th>
+        <th>ФИО</th>
+        <th>Email</th>
+        <th>Дата рождения</th>
+        <th>Номер телефона</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <td colspan="5">
+        <tui-loader [showLoader]="loading" size="xxl"></tui-loader>
+      </td>
+      <tr *ngFor="let courier of couriers; let idx = index;">
+        <td>{{idx+1}}</td>
+        <td>{{courier.name}}</td>
+        <td>{{courier.email}}</td>
+        <td>{{courier.birthday}}</td>
+        <td>{{courier.telephone}}</td>
+        <td><button tuiButton type="button" appearance="secondary">Изменить</button></td>
+        <td><button tuiButton type="button" appearance="primary">Удалить</button></td>
+      </tr>
+    </table>
+  </tui-island>
+</div>

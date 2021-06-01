@@ -1,0 +1,22 @@
+.main {
+  display: flex;
+  justify-content: space-between;
+  .container {
+    width: 40%;
+    height: 250px;
+  }
+  .details {
+    //width: 59%;
+    margin-left: 1%;
+    display: flex;
+    justify-content: space-around;
+    tui-stepper {
+      width: 40%;
+    }
+  }
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+}

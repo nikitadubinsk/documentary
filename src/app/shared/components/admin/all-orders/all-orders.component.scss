@@ -1,0 +1,53 @@
+.main {
+  min-height: 100vh;
+  background: url("../../../../../assets/background.svg") no-repeat center top / cover;
+}
+
+.container {
+  width: 40%;
+  height: 250px;
+}
+
+table {
+  border-collapse: collapse;
+  color: var(--tui-text-01);
+  width: 100%;
+}
+
+th {
+  border-bottom: 3px solid var(--tui-primary);
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+}
+
+tr {
+  text-align: center;
+}
+
+tr:nth-child(odd) {
+  background: white;
+}
+
+tr:nth-child(even) {
+  background: var(--tui-neutral-bg);
+}
+
+.active {
+  color: var(--tui-primary);
+  font-weight: 900;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  div {
+    display: flex;
+    p {
+      margin: 0 5px;
+    }
+  }
+}

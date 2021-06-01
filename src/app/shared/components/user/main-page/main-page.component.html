@@ -1,0 +1,161 @@
+<nav class="block">
+  <h2>Документишная</h2>
+  <button tuiButton type="button" icon="tuiIconUser" size="s" routerLink="/login">
+    Войти
+  </button>
+</nav>
+<section id="main">
+  <h2 class="white tui-text_h1">Доставим быстро, бережно, экономно</h2>
+  <p class="white tui-text_body-xl">Доставка документов по всему городу</p>
+</section>
+
+<section class="block">
+  <tui-island class="group tui-space_top-2" hoverable="true">
+    <h2>Узнать статус заказа</h2>
+    <div tuiGroup class="group tui-space_top-6">
+      <tui-input class="tui-group__inherit-item" tuiTextfieldExampleText="House" tuiHintContent="Напишите номер заказа"
+        [(ngModel)]="numberOrder">
+        Номер Вашего заказа
+      </tui-input>
+      <tui-input-password tuiTextfieldSize="m" [(ngModel)]="passwordOdrder">Пароль (для более подробного отслеживания)
+      </tui-input-password>
+      <button tuiIconButton type="button" class="tui-space_right-3 tui-space_bottom-3" icon="tuiIconArrowRight"
+        appearance="secondary" (click)="toggle()" [disabled]="!numberOrder" [showLoader]="loading"></button>
+    </div>
+    <tui-expand [expanded]="expanded">
+      <ng-template tuiExpandContent>
+        <app-check-status [isFull]="newPasswordOdrder !== ''" [res]="ans" [isAdmin]="false"></app-check-status>
+      </ng-template>
+    </tui-expand>
+  </tui-island>
+</section>
+
+<form class="input-wrapper" [formGroup]="newOrder" class="block" *ngIf="isOpenNewOrder">
+  <h1>Создание нового заказа</h1>
+  <div tuiGroup class="group">
+    <div>
+      <tui-island class="group tui-space_top-2" hoverable="true">
+        <p class="tui-island__category">Данные отправителя</p>
+        <div tuiGroup class="group">
+          <div>
+            <tui-input class="tui-group__inherit-item" formControlName="senderName" tuiTextfieldExampleText="House"
+              tuiHintContent="Write a number">
+              ФИО или название организации
+            </tui-input>
+          </div>
+          <div>
+            <tui-input-phone formControlName="senderTelephone" class="tui-group__inherit-item">
+              Номер телефона Ваш или представителя
+            </tui-input-phone>
+          </div>
+        </div>
+        <div>
+          <tui-input formControlName="senderEmail" class="tui-space_top-2" name="email">
+            Ваш адрес электронной почты
+          </tui-input>
+          <tui-input class="tui-space_top-2" formControlName="senderAddress" tuiTextfieldExampleText="House"
+            tuiHintContent="Write a number" icon="tuiIconGeoLarge">
+            Адрес
+          </tui-input>
+          <tui-input-number formControlName="testValue" class="tui-space_top-2">
+            Объявленная стоимость (при необходимости)
+          </tui-input-number>
+        </div>
+      </tui-island>
+      <tui-island class="group tui-space_top-2" hoverable="true">
+        <p class="tui-island__category">Данные получателя</p>
+        <div tuiGroup class="group">
+          <div>
+            <tui-input class="tui-group__inherit-item" formControlName="recipientName" tuiTextfieldExampleText="House"
+              tuiHintContent="Write a number">
+              ФИО или название организации
+            </tui-input>
+          </div>
+          <div>
+            <tui-input-phone formControlName="recipientTelephone" class="tui-group__inherit-item">
+              Номер телефона Ваш или представителя
+            </tui-input-phone>
+          </div>
+        </div>
+        <div>
+          <tui-input class="tui-space_top-2" formControlName="recipientAddress" tuiTextfieldExampleText="House"
+            tuiHintContent="Write a number" icon="tuiIconGeoLarge">
+            Адрес
+          </tui-input>
+        </div>
+      </tui-island>
+    </div>
+    <div class="tui-space_left-4">
+      <tui-island class="tui-space_top-2" hoverable="true" *ngIf="!isPrice">
+        <p class="tui-island__category">Стоимость доставки</p>
+        <p class="tui-text_h6">Будет рассчитана позднее</p>
+      </tui-island>
+      <tui-island class="tui-space_top-2" hoverable="true" *ngIf="isPrice">
+        <p class="tui-island__category">Стоимость доставки</p>
+        <tui-money currency="RUB" [value]="priceOrder" class="tui-island__title"> </tui-money>
+        <tui-input class="tui-space_top-2" tuiTextfieldExampleText="House"
+          tuiHintContent="Пароль для более точного отслуживания заказа" formControlName="password">
+          Пароль для более точного отслеживания заказа (только вы будете его знать)
+        </tui-input>
+        <tui-checkbox-labeled formControlName="personalData" class="tui-space_top-4">
+          Я даю согласие на обработку моих персональных данных
+        </tui-checkbox-labeled>
+      </tui-island>
+      <tui-island class="tui-space_top-2" hoverable="true" *ngIf="isPrice">
+        <p class="tui-island__category">Данные карты</p>
+        <tui-input-card formControlName="cardNumber" [autocompleteEnabled]="true">
+          Номер карты
+        </tui-input-card>
+        <div tuiGroup class="tui-space_top-2">
+          <tui-input-expire formControlName="cardDate" [autocompleteEnabled]="true">
+            Срок
+          </tui-input-expire>
+          <tui-input-cvc formControlName="CVVcode" [autocompleteEnabled]="true">
+            CVC/CVV
+          </tui-input-cvc>
+        </div>
+      </tui-island>
+      <button tuiButton type="button" class="tui-space_right-3 tui-space_top-4 maxWidth" appearance="secondary"
+        (click)="calculateCost()" [showLoader]="loading"
+        [disabled]="!(newOrder.value.senderAddress && newOrder.value.recipientAddress)">Рассчитать
+        стоимость</button>
+      <p class="error tui-text_body-s tui-space_top-1 tui-space_bottom-2"
+        *ngIf="!(newOrder.value.senderAddress && newOrder.value.recipientAddress)">
+        Пожалуйста, заполните оба адреса</p>
+    </div>
+  </div>
+  <button tuiButton type=" button" class="tui-space_right-3 tui-space_bottom-3 tui-space_top-4 maxWidth"
+    appearance="secondary" (click)="createOrder()" [showLoader]="loading" [disabled]="newOrder.invalid"
+    *ngIf="isPrice">Оформить
+    заказ</button>
+  <p class="error tui-text_body-l" *ngIf="isPrice && newOrder.invalid">Пожалуйста, заполните все поля</p>
+</form>
+
+<div class="block" *ngIf="!isError && res2">
+  <tui-island class="tui-space_top-2" hoverable="true">
+    <p class="susses tui-text_h5">
+      <tui-marker-icon src="tuiIconCheck" mode="success" class="tui-space_bottom-4" size="m"></tui-marker-icon><br>Заказ
+      № {{res2.id}} (договор № {{res2.number}})
+      был успешно создан. <br>Вы
+      можете его отсеживать по паролю, который Вы
+      указали<br>
+      <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3 tui-space_top-2 maxWidth"
+        appearance="secondary" (click)="startNewOrder()">Оформить еще один заказ</button>
+    </p>
+  </tui-island>
+</div>
+
+<div class="block" *ngIf="isError">
+  <tui-island class="tui-space_top-2" hoverable="true">
+    <p class="susses tui-text_h5">
+      <tui-marker-icon src="tuiIconCancel" mode="error" class="tui-space_bottom-4" size="m"></tui-marker-icon><br>К
+      сожалению, произошла небольшая ошибка
+      <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3 tui-space_top-2 maxWidth"
+        appearance="secondary" (click)="startNewOrder()">Попробовать еще заказ</button>
+    </p>
+  </tui-island>
+</div>
+
+<footer class="block tui-space_top-12">
+  <p class="white">Документишная</p>
+</footer>

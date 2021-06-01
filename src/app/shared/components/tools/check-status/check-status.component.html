@@ -1,0 +1,50 @@
+<div class="tui-space_top-4 tui-space_bottom-4 main" *ngIf="isFull && res">
+  <div class="container" *ngIf="!isAdmin">
+    <ya-map [center]="[+res.senderLongitude, +res.senderLatitude]" [zoom]="11">
+      <ya-placemark [geometry]="[+res.senderLongitude, +res.senderLatitude]"
+        [properties]="{iconContent: 'A', hintContent: res.senderAddress}"></ya-placemark>
+      <ya-placemark [geometry]="[+res.recipientLongitude, +res.recipientLatitude]"
+        [properties]="{iconContent: 'B', hintContent: res.recipientAddress}"></ya-placemark>
+      <ya-geoobject [feature]="geoObject.feature" [options]="geoObject.options"></ya-geoobject>
+    </ya-map>
+  </div>
+  <div class="details">
+    <tui-stepper [activeItemIndex]="res.status-1" orientation="vertical" *ngIf="!isAdmin">
+      <button tuiStep>Заказ создан</button>
+      <button tuiStep>Назначен курьер</button>
+      <button tuiStep>Уже в пути</button>
+      <button tuiStep>Подтверждение</button>
+      <button tuiStep>Получен</button>
+    </tui-stepper>
+    <div>
+      <p class="tui-island__category">Данные отправителя</p>
+      <p class="tui-island__paragraph">{{res.senderName}}, {{res.senderTelephone}}, {{res.senderAddress}}</p>
+      <p class="tui-island__category tui-space_top-4">Данные получателя</p>
+      <p class="tui-island__paragraph">{{res.recipientName}}, {{res.recipientTelephone}}, {{res.recipientAddress}}
+      <p class="tui-island__category tui-space_top-4" *ngIf="res.courier">Данные курьера</p>
+      <p class="tui-island__paragraph" *ngIf="res.courier">{{res.courier.name}}, {{res.courier.telephone}}
+      </p>
+      <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3 tui-space_top-2 maxWidth"
+        appearance="secondary" (click)="changeStatus(res.id)" *ngIf="res.status === 4">Подтвердить получение
+        документов</button>
+    </div>
+  </div>
+</div>
+
+<div class="tui-space_top-6 tui-space_bottom-6" *ngIf="!isFull && res">
+  <div class="flex">
+    <tui-stepper [activeItemIndex]="res.status-1">
+      <button tuiStep>Заказ создан</button>
+      <button tuiStep>Назначен курьер</button>
+      <button tuiStep>Уже в пути</button>
+      <button tuiStep>Подтверждение</button>
+      <button tuiStep>Получен</button>
+    </tui-stepper>
+  </div>
+</div>
+
+<div *ngIf="res == null">
+  <tui-notification class="tui-space_top-4" status="error">
+    К сожалению, неверный номер заказа или пароль
+  </tui-notification>
+</div>

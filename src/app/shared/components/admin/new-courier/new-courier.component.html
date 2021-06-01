@@ -1,0 +1,28 @@
+<div class="block main">
+  <tui-island hoverable="true" class="tui-space_top-6">
+    <p class="tui-island__category">Курьеры</p>
+    <h3 class="tui-island__title">Добавить нового курьера</h3>
+    <form [formGroup]="newCourier">
+      <tui-input class="tui-group__inherit-item" formControlName="name" tuiTextfieldExampleText="House"
+        tuiHintContent="Write a number" class="tui-space_bottom-4" name="name">
+        ФИО курьера
+      </tui-input>
+      <tui-input-phone formControlName="telephone" class="tui-group__inherit-item tui-space_bottom-4" name="telephone">
+        Номер телефона курьера
+      </tui-input-phone>
+      <tui-input class="b-form" formControlName="email" class="tui-space_bottom-4" name="email">
+        Адрес электронной почты курьера
+      </tui-input>
+      <tui-input-date tuiUnfinishedValidator="Finish filling the field" formControlName="birthday"
+        class="tui-space_bottom-4" name="birthday">
+        Дата рождения
+      </tui-input-date>
+      <tui-loader class="inline-flex tui-space_right-2" [showLoader]="loader" [inheritColor]="true" [overlay]="true">
+        <button tuiButton type="button" appearance="primary" class="tui-space_bottom-4 maxWidth"
+          (click)="addCourier()">Добавить
+          нового
+          курьера</button>
+      </tui-loader>
+    </form>
+  </tui-island>
+</div>

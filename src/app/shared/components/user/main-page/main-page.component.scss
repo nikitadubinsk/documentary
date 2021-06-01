@@ -1,0 +1,30 @@
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.white {
+  color: white;
+}
+
+#main {
+  background: url("../../../../../assets/main.png") no-repeat center top / cover;
+  min-height: 50vh;
+  padding: 3.5% 40% 5% 10%;
+  margin-bottom: 2%;
+}
+
+.susses {
+  text-align: center;
+  padding: 3% 0;
+}
+
+footer {
+  background: #526ed3;
+}
+
+.error {
+  color: var(--tui-negative);
+  text-align: center;
+}

@@ -1,0 +1,18 @@
+<section>
+  <div class="tui-container shadow(6)">
+    <h1 class="tui-form__header">Авторизоваться в приложении</h1>
+    <form [formGroup]="autherization">
+      <tui-input class="tui-space_top-4" formControlName="email" tuiTextfieldSize="m">
+        Адрес электронной почты
+      </tui-input>
+      <tui-field-error formControlName="email"></tui-field-error>
+      <tui-input-password class="tui-space_top-4" formControlName="password" tuiTextfieldSize="m">
+        Пароль
+      </tui-input-password>
+      <tui-field-error formControlName="password"></tui-field-error>
+      <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3 tui-space_top-4" appearance="primary">
+        Авторизоваться в приложении
+      </button>
+    </form>
+  </div>
+</section>

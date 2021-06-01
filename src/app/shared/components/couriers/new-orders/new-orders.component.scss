@@ -1,0 +1,31 @@
+.main {
+  min-height: 100vh;
+  background: url("../../../../../assets/background.svg") no-repeat center top / cover;
+}
+
+table {
+  border-collapse: collapse;
+  color: var(--tui-text-01);
+  width: 100%;
+}
+
+th {
+  border-bottom: 3px solid var(--tui-primary);
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+}
+
+tr {
+  text-align: center;
+}
+
+tr:nth-child(odd) {
+  background: white;
+}
+
+tr:nth-child(even) {
+  background: var(--tui-neutral-bg);
+}

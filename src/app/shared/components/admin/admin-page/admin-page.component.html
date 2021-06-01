@@ -1,0 +1,9 @@
+<tui-tabs>
+  <h1 class="tui-text_h3 title tui-space_left-6 tui-space_right-10 tui-space_top-3">Административная панель</h1>
+  <a tuiTab routerLink='/admin/' routerLinkActive [routerLinkActiveOptions]="{exact:true}">Список заказов</a>
+  <a tuiTab routerLink='/admin/couriers' routerLinkActive [routerLinkActiveOptions]="{exact:true}">Список курьеров</a>
+  <a tuiTab routerLink='/admin/new-courier' routerLinkActive [routerLinkActiveOptions]="{exact:true}">Добавить нового
+    курера</a>
+</tui-tabs>
+
+<router-outlet></router-outlet>

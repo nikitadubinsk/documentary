@@ -1,0 +1,43 @@
+<div class="block main">
+  <tui-island hoverable="true" class="tui-space_top-6">
+    <p class="tui-island__category">Заказы</p>
+    <h3 class="tui-island__title">Мои заказы</h3>
+    <tui-loader [showLoader]="loading" size="xxl"></tui-loader>
+    <tui-accordion class="container" *ngIf="!loading">
+      <tui-accordion-item *ngFor="let res of orders">
+        <p *ngIf="res.status < 3">Заказ № {{res.id}}: {{res.senderAddress}}
+        </p>
+        <p *ngIf="res.status > 2">Заказ № {{res.id}}:
+          {{res.recipientAddress}}</p>
+        <ng-template tuiAccordionItemContent>
+          <div class="dflex">
+            <div class="containerr">
+              <ya-map [center]="[+res.senderLongitude, +res.senderLatitude]" [zoom]="11">
+                <ya-placemark [geometry]="[+res.senderLongitude, +res.senderLatitude]"
+                  [properties]="{iconContent: 'A', hintContent: res.senderAddress}"></ya-placemark>
+                <ya-placemark [geometry]="[+res.recipientLongitude, +res.recipientLatitude]"
+                  [properties]="{iconContent: 'B', hintContent: res.recipientAddress}"></ya-placemark>
+              </ya-map>
+            </div>
+            <div class="details">
+              <p class="tui-island__category">Данные отправителя</p>
+              <p class="tui-island__paragraph">{{res.senderName}}, {{res.senderTelephone}}, {{res.senderAddress}}</p>
+              <p class="tui-island__category tui-space_top-4">Данные получателя</p>
+              <p class="tui-island__paragraph">{{res.recipientName}}, {{res.recipientTelephone}},
+                {{res.recipientAddress}}
+              </p>
+              <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3 tui-space_top-2 maxWidth"
+                appearance="secondary" (click)="changeStatus(3, res.id)" size="m" *ngIf="res.status == 2">Подтвердить
+                получение
+                документов</button>
+              <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3 tui-space_top-2 maxWidth"
+                appearance="secondary" (click)="changeStatus(4, res.id)" size="m" *ngIf="res.status == 3">Подтвердить
+                передачу
+                документов получателю</button>
+            </div>
+          </div>
+        </ng-template>
+      </tui-accordion-item>
+    </tui-accordion>
+  </tui-island>
+</div>
