@@ -42,7 +42,7 @@ app.use(function (req, res, next) {
 });
 
 // Обработка статических файлов
-app.use("/", serveStatic(path.join(__dirname, "../dist/memoryExpedition")));
+app.use("/", serveStatic(path.join(__dirname, "../dist/delivery-docs")));
 
 // Работа со статическими файлами
 app.use(express.static(path.join(__dirname, "../dist")));
@@ -51,7 +51,7 @@ app.use(express.static(path.join(__dirname, "../dist")));
 app.use("/public", express.static(path.join(__dirname, "/public")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../dist/memoryExpedition/index.html"));
+  res.sendFile(path.join(__dirname, "../dist/delivery-docs/index.html"));
 });
 app.get("/game", (req, res) => {
   res.redirect("/");
@@ -60,7 +60,7 @@ app.get("/finish", (req, res) => {
   res.redirect("/");
 });
 app.get("/admin/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "../dist/memoryExpedition/index.html"));
+  res.sendFile(path.join(__dirname, "../dist/delivery-docs/index.html"));
 });
 app.get("/admin", (req, res) => {
   res.redirect("/admin/login");
