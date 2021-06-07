@@ -4,16 +4,14 @@ const history = require("connect-history-api-fallback");
 const serveStatic = require("serve-static");
 const path = require("path");
 const cors = require("cors");
-const PDFDocument = require("pdfkit");
-const doc = new PDFDocument();
 const fs = require("fs");
 const nodemailer = require("nodemailer");
 
 let transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "user",
-    pass: "password",
+    user: "documentarypolytech@gmail.com",
+    pass: "documentary2021",
   },
 });
 
@@ -84,7 +82,6 @@ const CONFIG = {
 };
 
 const Sequelize = require("sequelize");
-const { getParsedCommandLineOfConfigFile } = require("typescript");
 const sequelize = new Sequelize(CONFIG.DB, CONFIG.USERNAME, CONFIG.PASSWORD, {
   dialect: CONFIG.DIALECT,
   host: CONFIG.HOST,

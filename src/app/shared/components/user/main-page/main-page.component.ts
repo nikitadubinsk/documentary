@@ -128,6 +128,24 @@ export class MainPageComponent implements OnInit {
         this.order.recipient.latitude,
         this.order.recipient.longitude
       );
+      this.geoObject = {
+        feature: {
+          geometry: {
+            // The "Polyline" geometry type.
+            type: 'LineString',
+            // Specifying the coordinates of the vertices of the polyline.
+            coordinates: [
+              [+this.order.sender.longitude, +this.order.sender.latitude],
+              [+this.order.recipient.longitude, +this.order.recipient.latitude],
+            ],
+          },
+        },
+        options: {
+          draggable: false,
+          strokeColor: '#526ed3',
+          strokeWidth: 5,
+        },
+      };
 
       this.isPrice = true;
       this.priceOrder = +(150 + distance / 100).toFixed(2);
@@ -158,53 +176,24 @@ export class MainPageComponent implements OnInit {
   isError = false;
   isOpenNewOrder = true;
   loading = false;
+  geoObject;
 
   async createOrder() {
     this.loading = true;
     try {
-      let res = await this.geocoderservice.geocoding(
-        this.newOrder.value.senderAddress
-      );
-      this.order.sender.latitude =
-        Object.values(
-          res
-        )[0].GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(
-          ' '
-        )[0];
-      this.order.sender.longitude =
-        Object.values(
-          res
-        )[0].GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(
-          ' '
-        )[1];
       this.order.sender.name = this.newOrder.value.senderName;
       this.order.sender.telephone = this.newOrder.value.senderTelephone;
       this.order.sender.address = this.newOrder.value.senderAddress;
       this.order.sender.email = this.newOrder.value.senderEmail;
-      let res1 = await this.geocoderservice.geocoding(
-        this.newOrder.value.recipientAddress
-      );
-      this.order.recipient.latitude =
-        Object.values(
-          res1
-        )[0].GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(
-          ' '
-        )[0];
-      this.order.recipient.longitude =
-        Object.values(
-          res1
-        )[0].GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(
-          ' '
-        )[1];
       this.order.recipient.name = this.newOrder.value.recipientName;
       this.order.recipient.telephone = this.newOrder.value.recipientTelephone;
       this.order.recipient.address = this.newOrder.value.recipientAddress;
       this.order.password = this.newOrder.value.password;
       this.res2 = await this.geocoderservice.newOrder(this.order);
       this.newOrder.reset();
-      this.isPrice = false;
       this.priceOrder = 0;
       this.isOpenNewOrder = false;
+      this.isPrice = false;
     } catch (e) {
       this.isError = true;
       this.isOpenNewOrder = false;

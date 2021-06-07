@@ -33,7 +33,7 @@ export class CheckStatusComponent implements OnInit {
         },
       },
       options: {
-        draggable: true,
+        draggable: false,
         strokeColor: '#526ed3',
         strokeWidth: 5,
       },

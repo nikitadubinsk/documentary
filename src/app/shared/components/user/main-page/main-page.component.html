@@ -57,9 +57,16 @@
             tuiHintContent="Write a number" icon="tuiIconGeoLarge">
             Адрес
           </tui-input>
-          <tui-input-number formControlName="testValue" class="tui-space_top-2">
+          <tui-input-number class="tui-space_top-2">
             Объявленная стоимость (при необходимости)
           </tui-input-number>
+          <tui-input class="tui-space_top-2" tuiTextfieldExampleText="House"
+            tuiHintContent="Пароль для более точного отслуживания заказа" formControlName="password">
+            Пароль для более точного отслеживания заказа (только вы будете его знать)
+          </tui-input>
+          <tui-checkbox-labeled formControlName="personalData" class="tui-space_top-4">
+            Я даю согласие на обработку моих персональных данных
+          </tui-checkbox-labeled>
         </div>
       </tui-island>
       <tui-island class="group tui-space_top-2" hoverable="true">
@@ -93,13 +100,15 @@
       <tui-island class="tui-space_top-2" hoverable="true" *ngIf="isPrice">
         <p class="tui-island__category">Стоимость доставки</p>
         <tui-money currency="RUB" [value]="priceOrder" class="tui-island__title"> </tui-money>
-        <tui-input class="tui-space_top-2" tuiTextfieldExampleText="House"
-          tuiHintContent="Пароль для более точного отслуживания заказа" formControlName="password">
-          Пароль для более точного отслеживания заказа (только вы будете его знать)
-        </tui-input>
-        <tui-checkbox-labeled formControlName="personalData" class="tui-space_top-4">
-          Я даю согласие на обработку моих персональных данных
-        </tui-checkbox-labeled>
+        <div class="container" *ngIf="isPrice">
+          <ya-map [center]="[+order.sender.longitude, +order.sender.latitude]" [zoom]="11">
+            <ya-placemark [geometry]="[+order.sender.longitude, +order.sender.latitude]"
+              [properties]="{iconContent: 'A', hintContent: order.sender.address}"></ya-placemark>
+            <ya-placemark [geometry]="[+order.recipient.longitude, +order.recipient.latitude]"
+              [properties]="{iconContent: 'B', hintContent: order.recipient.address}"></ya-placemark>
+            <ya-geoobject [feature]="geoObject.feature" [options]="geoObject.options"></ya-geoobject>
+          </ya-map>
+        </div>
       </tui-island>
       <tui-island class="tui-space_top-2" hoverable="true" *ngIf="isPrice">
         <p class="tui-island__category">Данные карты</p>
